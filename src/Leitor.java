@@ -67,8 +67,17 @@ public class Leitor {
      return this.letra+": "+this.ocorrencia;
      }
      } 
+     public class ComparadorCarac implements Comparator<Caracters> {
+    
+    @Override
+    public int compare(Caracters letra1, Caracters letra2) {
+    
+      return letra1.compareTo(letra2);
+
+  }
+     }
       Caracters[] lista = new Caracters[1000];
-     public  void lerArquivo(String NomeArquivo) throws IOException{
+      public void lerArquivo(String NomeArquivo) throws IOException{
         FileInputStream     arquivoFisico;
         BufferedInputStream buffReader;
         DataInputStream     data;
@@ -120,16 +129,9 @@ public class Leitor {
             System.out.print(err.getMessage());
         }
     }
-     public class ComparadorCarac implements Comparator<Caracters> {
     
-    @Override
-    public int compare(Caracters letra1, Caracters letra2) {
-    
-      return letra1.compareTo(letra2);
-
-  }
   
 }
      
-}
+
 
