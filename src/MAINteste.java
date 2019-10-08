@@ -19,7 +19,7 @@ public class MAINteste {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         Leitor Leitor = new Leitor();
-        Leitor.lerArquivo("C:\\Users\\Tomaz Marques\\Desktop\\testte\\testeOcorrencia.txt");
+        Leitor.lerArquivo("C:\\Users\\u18441\\Desktop\\teste.txt");
     }
     
 }

@@ -1,11 +1,13 @@
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 /*
@@ -16,7 +18,7 @@ import java.util.Arrays;
 
 /**
  *
- * @author Tomaz Marques
+ * @author u18441
  */
 public class Leitor {
    
@@ -46,6 +48,14 @@ public class Leitor {
       this.ocorrencia=exemplo.ocorrencia;
     
      }
+     public int compareTo(Caracters comp){
+     if(this.ocorrencia>comp.ocorrencia)
+         return 1;
+     else if(this.ocorrencia<comp.ocorrencia)    
+     return -1;
+     
+     return 0;
+     }
      public boolean ocorrenciaMaior(int ocorrencia){
      if(this.ocorrencia>ocorrencia)//=?
         return true;
@@ -61,8 +71,8 @@ public class Leitor {
      public  void lerArquivo(String NomeArquivo) throws IOException{
         FileInputStream     arquivoFisico;
         BufferedInputStream buffReader;
-        DataInputStream data;
-        
+        DataInputStream     data;
+    
         try {
             arquivoFisico = new FileInputStream(NomeArquivo);
             buffReader = new BufferedInputStream(arquivoFisico);
@@ -73,64 +83,53 @@ public class Leitor {
             int[] ocorrencias = new int[10000];
 
             data.read(vetByte);  // dados do arquivo
-            
-              
+
+              Caracters[] lista1= new Caracters[1000];
             for (char c : new String(vetByte).toCharArray())
                 {
-                    ocorrencias[c]++;  
-                }   
+                    System.out.println(c);
+                    ocorrencias[c]++; // conta ocorrencia
+                }
             
             int a=0;
              for(int i=0; i<ocorrencias.length; i++){
                 if (ocorrencias[i]>0){
                 System.out.println(ocorrencias[i]+" "+((char)i)+" "+i);  
-                lista[a]= new Caracters((char)i,ocorrencias[i]);
+                lista1[a]= new Caracters((char)i,ocorrencias[i]);
                  a++;}
                 
             }
-         
-                  listandoCaracters(lista); 
-        }
-     
-        catch (FileNotFoundException err){
+             
+            List<Caracters> lista;
+            lista = new ArrayList<>();
+            for(int e=0; e<lista1.length;e++){
+            if(lista1[e]!=null)
+                lista.add(lista1[e]);
+            }
+            
+            ComparadorCarac comp = new ComparadorCarac();
+            
+            Collections.sort(lista, comp);
+            System.out.println(lista);
+           // for(Caracters i: lista){
+             //   System.out.println(i);
+            //}
+        }catch (FileNotFoundException err){
             System.out.print(err.getMessage());
         }catch (IOException err){
             System.out.print(err.getMessage());
         }
     }
-        
-       public void listandoCaracters(Caracters[] vetor){
-         
-        //int e=0;
-         //for(;vetor[e]!=null;e++);
-          //e--;
-          //System.out.println(e);
-          //while(e>=0){
-          //for(int a=0;a>0;a--){
-          //if(vetor[e].ocorrencia>(vetor[e-1].ocorrencia)){
-          //Caracters auxi;
-          //auxi= new Caracters(lista[e-1]);
-          //vetor[e-1]=vetor[e];
-          //vetor[e]=auxi;
-          //System.out.println(auxi+" ");
-          //}
-          //else
-          //    e--;
-          //System.out.println(Arrays.toString(vetor));
-          //}}
-         int index1, index2;
-         Caracters aux;  
-         for(index1 =0; vetor[index1]!=null; index1++){  
-             for(index2 =0; vetor[index2] !=null; index2++){  
-                if(vetor[index2].ocorrencia>(vetor[index2+1].ocorrencia)){  
-                     aux = vetor[index2];  
-                     vetor[index2] = vetor[index2+1];  
-                     vetor[index2+1] = aux;  
-                 }  
-             }  
-         }System.out.println(Arrays.toString(vetor));
-         
-          
-        //System.out.println(Arrays.toString(vetor));
-        }   
+     public class ComparadorCarac implements Comparator<Caracters> {
+    
+    @Override
+    public int compare(Caracters letra1, Caracters letra2) {
+    
+      return letra1.compareTo(letra2);
+
+  }
+  
 }
+     
+}
+
