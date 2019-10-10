@@ -22,62 +22,9 @@ import java.util.List;
  */
 public class Leitor {
    
-     public class Caracters{
-     public char letra;
-     public  int ocorrencia;
-     public Caracters( char letra, int ocorrencia){
-     this.letra= letra;
-     this.ocorrencia= ocorrencia; 
-      }      
-      public Caracters(Caracters exemplo)
-      {
-      this.letra=exemplo.letra;
-      this.ocorrencia=exemplo.ocorrencia;
-      }
-     public int getOcorrencia(){
-     return this.ocorrencia;
-     }     
-     public char getLetra(){
-     return this.letra;
-     }  
-     public void setCaracters(Caracters exemplo)
-     {
-     if(exemplo.letra!=0)
-      this.letra=exemplo.letra;
-     if(exemplo.ocorrencia!=0)
-      this.ocorrencia=exemplo.ocorrencia;
-    
-     }
-     public int compareTo(Caracters comp){
-     if(this.ocorrencia>comp.ocorrencia)
-         return 1;
-     else if(this.ocorrencia<comp.ocorrencia)    
-     return -1;
-     
-     return 0;
-     }
-     public boolean ocorrenciaMaior(int ocorrencia){
-     if(this.ocorrencia>ocorrencia)//=?
-        return true;
-        else 
-         return false;
-     }
-     @Override
-     public String toString(){
-     return this.letra+": "+this.ocorrencia;
-     }
-     } 
-     public class ComparadorCarac implements Comparator<Caracters> {
-    
-    @Override
-    public int compare(Caracters letra1, Caracters letra2) {
-    
-      return letra1.compareTo(letra2);
-
-  }
-     }
-      Caracters[] lista = new Caracters[1000];
-      public void lerArquivo(String NomeArquivo) throws IOException{
+      Arvore arvore = new Arvore();     
+      Arvore.No[] lista1 = new Arvore.No[1000];
+     public  void lerArquivo(String NomeArquivo) throws IOException{
         FileInputStream     arquivoFisico;
         BufferedInputStream buffReader;
         DataInputStream     data;
@@ -93,10 +40,10 @@ public class Leitor {
 
             data.read(vetByte);  // dados do arquivo
 
-              Caracters[] lista1= new Caracters[1000];
+              
             for (char c : new String(vetByte).toCharArray())
                 {
-                    System.out.println(c);
+                   
                     ocorrencias[c]++; // conta ocorrencia
                 }
             
@@ -104,22 +51,23 @@ public class Leitor {
              for(int i=0; i<ocorrencias.length; i++){
                 if (ocorrencias[i]>0){
                 System.out.println(ocorrencias[i]+" "+((char)i)+" "+i);  
-                lista1[a]= new Caracters((char)i,ocorrencias[i]);
+                lista1[a]= arvore. new No((char)i,ocorrencias[i]);
                  a++;}
                 
             }
              
-            List<Caracters> lista;
+            List<Arvore.No> lista;
             lista = new ArrayList<>();
             for(int e=0; e<lista1.length;e++){
             if(lista1[e]!=null)
                 lista.add(lista1[e]);
             }
             
-            ComparadorCarac comp = new ComparadorCarac();
+            Arvore.ComparadorCarac comp = new Arvore.ComparadorCarac();
             
             Collections.sort(lista, comp);
             System.out.println(lista);
+            arvore.geraArvore(lista);
            // for(Caracters i: lista){
              //   System.out.println(i);
             //}
@@ -130,8 +78,11 @@ public class Leitor {
         }
     }
     
+        
+    }
   
-}
+
+     
      
 
 
